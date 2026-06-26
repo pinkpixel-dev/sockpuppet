@@ -19,5 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Relocated custom React frontend files (`App.jsx`, `App.css`, `main.jsx`, `index.css`, and components) from root directory to their proper standard locations inside `src/` and `src/components/`
 - Deleted redundant duplicate configuration/Rust source files in the project root
 - Resolved E0255 naming conflicts in `src-tauri/src/lib.rs` by removing unnecessary `pub` visibility modifiers from commands
+- Fixed AppImage bundling crash on Arch/CachyOS by disabling symbol stripping (`NO_STRIP=true`) to avoid conflicts with modern ELF `.relr.dyn` relocations in WebKitGTK and other system libraries
+
 
 
