@@ -16,6 +16,8 @@ A lightweight port and process monitor for Linux. See what's listening on your p
 - **Live connection table** — TCP, TCP6, UDP, UDP6 connections at a glance
 - **Process mapping** — maps each port to the process name and PID holding it
 - **Service labels** — common ports auto-labeled (SSH, Postgres, Vite, Redis, etc.)
+- **Custom port labels** — add, edit, or clear labels for any local port inline, persisted via local storage
+- **System tray integration** — runs in the background; close to hide, left-click tray to restore, menu to quit
 - **Color-coded states** — LISTEN, ESTABLISHED, TIME_WAIT each have distinct visual treatment
 - **Kill button** — terminate any process you own directly from the UI, with a confirmation modal
 - **Auto-refresh** — configurable intervals (2s / 5s / 10s / 30s) with pause support
@@ -136,6 +138,21 @@ Some kernel-level or very short-lived connections may not have a readable `/proc
 ### UDP connections
 
 UDP is connectionless, so UDP entries represent bound sockets, not active sessions. The state column will typically show `—` for UDP entries.
+
+### Custom Port Labels
+
+You can add, edit, or remove custom labels for any local port directly from the UI:
+- Hover over any unlabeled port and click the `+` badge, or double-click an existing port number or service badge to enter edit mode.
+- Type your custom label and press **Enter** or click outside to save.
+- Clear the text and save to delete a custom label.
+- Labels are saved using browser `localStorage` (`sockpuppet_port_labels`) and will persist between application restarts.
+
+### System Tray Minimizer
+
+Sockpuppet is designed to run persistently in the background:
+- Clicking the window close button (`X`) will **minimize/hide** the window to your system tray instead of exiting the application.
+- Left-clicking the Sockpuppet icon in your system tray will instantly restore and focus the window.
+- Right-clicking the system tray icon opens a context menu allowing you to **Show** the window or **Quit** the application completely.
 
 ---
 
