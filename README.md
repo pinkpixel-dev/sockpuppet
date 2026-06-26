@@ -1,10 +1,13 @@
-# 🧦 Sockpuppet
+<p align="center">
+  <img src="logo.png" width="300" height="300" alt="Sockpuppet Logo" />
+</p>
 
-A lightweight port and process monitor for Linux. See what's listening on your ports, what processes are holding them, and kill anything you don't want — all from a clean desktop UI.
+# Sockpuppet
 
-No more `lsof -i`, no more cheatsheets taped to your monitor.
 
-![Sockpuppet Screenshot](./docs/screenshot.png)
+A lightweight port and process monitor for Linux. See what's listening on your ports, what processes are holding them, and kill anything you don't want from a clean desktop UI.
+
+![Sockpuppet Screenshot](./screenshot.png)
 
 ---
 
@@ -223,4 +226,4 @@ Sockpuppet needs read access to `/proc/{pid}/fd/`. If you're running in a restri
 
 ## License
 
-MIT — do whatever you want with it.
+Apache 2.0
