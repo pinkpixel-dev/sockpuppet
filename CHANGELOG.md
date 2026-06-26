@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced the placeholder socks emoji logo in the top-left corner with the custom `logo.png` asset
 - Added 300x300 centered `logo.png` image to the top of `README.md`
 - Generated desktop application icons (ICNS, ICO, PNGs, etc.) from `icon.png` using the Tauri CLI tool
+- Added custom port labeling feature: double-click port numbers or click service badges to edit inline; values are persisted locally via `localStorage`
+
 
 
 ### Fixed

@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import "./ConnectionTable.css";
 
 const STATE_CLASS = {
@@ -20,16 +21,75 @@ function StateChip({ state }) {
   );
 }
 
-function ConnectionRow({ conn, onKillRequest }) {
+function ConnectionRow({ conn, onKillRequest, onSaveLabel }) {
   const hasRemote = conn.remote_addr && conn.remote_port;
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(conn.isCustomLabel ? conn.service : "");
+  const inputRef = useRef(null);
+
+  // Keep state in sync if connection properties change from parent
+  useEffect(() => {
+    if (!isEditing) {
+      setEditValue(conn.isCustomLabel ? conn.service : "");
+    }
+  }, [conn.service, conn.isCustomLabel, isEditing]);
+
+  const handleSave = () => {
+    setIsEditing(false);
+    onSaveLabel(conn.local_port, editValue);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSave();
+    } else if (e.key === "Escape") {
+      setIsEditing(false);
+      setEditValue(conn.isCustomLabel ? conn.service : "");
+    }
+  };
 
   return (
     <tr className="conn-row">
-      <td className="col-port">
-        <span className="port-number">{conn.local_port}</span>
-        {conn.service && (
-          <span className="port-service">{conn.service}</span>
-        )}
+      <td
+        className="col-port"
+        onDoubleClick={() => setIsEditing(true)}
+      >
+        <div className="port-cell-content">
+          <span className="port-number">{conn.local_port}</span>
+          {isEditing ? (
+            <input
+              ref={inputRef}
+              type="text"
+              className="port-label-input"
+              value={editValue}
+              onChange={(e) => setEditValue(e.target.value)}
+              onBlur={handleSave}
+              onKeyDown={handleKeyDown}
+              placeholder="Label..."
+              autoFocus
+            />
+          ) : (
+            <>
+              {conn.service ? (
+                <span
+                  className={`port-service ${conn.isCustomLabel ? "is-custom" : ""}`}
+                  onClick={() => setIsEditing(true)}
+                  title="Double-click or click to edit label"
+                >
+                  {conn.service}
+                </span>
+              ) : (
+                <span
+                  className="add-label-btn"
+                  onClick={() => setIsEditing(true)}
+                  title="Add custom label"
+                >
+                  +
+                </span>
+              )}
+            </>
+          )}
+        </div>
       </td>
       <td className="col-proto">
         <span className="proto-badge">{conn.protocol}</span>
@@ -78,7 +138,7 @@ function ConnectionRow({ conn, onKillRequest }) {
   );
 }
 
-function ConnectionTable({ connections, onKillRequest }) {
+function ConnectionTable({ connections, onKillRequest, onSaveLabel }) {
   return (
     <div className="table-wrap">
       <table className="conn-table">
@@ -100,6 +160,7 @@ function ConnectionTable({ connections, onKillRequest }) {
               key={`${conn.protocol}-${conn.local_port}-${conn.pid}-${i}`}
               conn={conn}
               onKillRequest={onKillRequest}
+              onSaveLabel={onSaveLabel}
             />
           ))}
         </tbody>
@@ -109,3 +170,4 @@ function ConnectionTable({ connections, onKillRequest }) {
 }
 
 export default ConnectionTable;
+

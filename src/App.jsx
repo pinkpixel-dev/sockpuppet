@@ -32,7 +32,29 @@ function App() {
   const [isPaused, setIsPaused] = useState(false);
   const [killTarget, setKillTarget] = useState(null);
   const [pulseKey, setPulseKey] = useState(0);
+  const [customLabels, setCustomLabels] = useState(() => {
+    try {
+      const saved = localStorage.getItem("sockpuppet_port_labels");
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
   const intervalRef = useRef(null);
+
+  const saveCustomLabel = useCallback((port, label) => {
+    setCustomLabels(prev => {
+      const next = { ...prev };
+      if (label && label.trim()) {
+        next[port] = label.trim();
+      } else {
+        delete next[port];
+      }
+      localStorage.setItem("sockpuppet_port_labels", JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
 
   const fetchConnections = useCallback(async (showLoading = false) => {
     if (showLoading) setLoading(true);
@@ -100,10 +122,14 @@ function App() {
     return matchesSearch && matchesProtocol && matchesState;
   });
 
-  const enrichedConnections = filteredConnections.map(conn => ({
-    ...conn,
-    service: KNOWN_PORTS[conn.local_port] || null,
-  }));
+  const enrichedConnections = filteredConnections.map(conn => {
+    const customLabel = customLabels[conn.local_port];
+    return {
+      ...conn,
+      service: customLabel || KNOWN_PORTS[conn.local_port] || null,
+      isCustomLabel: !!customLabel,
+    };
+  });
 
   return (
     <div className="app">
@@ -154,6 +180,7 @@ function App() {
           <ConnectionTable
             connections={enrichedConnections}
             onKillRequest={handleKillRequest}
+            onSaveLabel={saveCustomLabel}
           />
         )}
       </main>
