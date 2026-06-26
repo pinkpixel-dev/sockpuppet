@@ -37,20 +37,45 @@ A lightweight port and process monitor for Linux. See what's listening on your p
 
 ## Getting Started
 
-### 1. Clone the repo
+### 1. Install from a release package (recommended)
+
+Download the latest `.deb`, `.rpm`, or AppImage package from the [releases page](https://github.com/yourname/sockpuppet/releases), then install or run the package for your Linux distribution.
+
+For Debian or Ubuntu, install the `.deb` package:
+
+```bash
+sudo apt install ./sockpuppet_*.deb
+```
+
+For Fedora, RHEL, or openSUSE, install the `.rpm` package:
+
+```bash
+sudo rpm -i sockpuppet-*.rpm
+```
+
+For other Linux distributions, make the AppImage executable and run it:
+
+```bash
+chmod +x Sockpuppet-*.AppImage
+./Sockpuppet-*.AppImage
+```
+
+### 2. Build from source
+
+If you want to run Sockpuppet from source or contribute changes, clone the repo first:
 
 ```bash
 git clone https://github.com/yourname/sockpuppet.git
 cd sockpuppet
 ```
 
-### 2. Install frontend dependencies
+### 3. Install frontend dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Run in development mode
+### 4. Run in development mode
 
 ```bash
 npm run tauri dev
@@ -58,7 +83,7 @@ npm run tauri dev
 
 The app window will open. The Rust backend compiles on first run — give it a minute.
 
-### 4. Build for release
+### 5. Build for release
 
 ```bash
 npm run tauri build
