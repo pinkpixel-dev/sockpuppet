@@ -29,4 +29,8 @@ dist-ssr
 .codex/
 
 # Other
+ERRORS.md
+MEMORY.md
+OVERVIEW.md
+ROADMAP.md
 sockpuppet.zip
