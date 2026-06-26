@@ -1,0 +1,167 @@
+.table-wrap {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.conn-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* Header */
+.conn-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-surface);
+}
+
+.conn-table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.conn-table th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Rows */
+.conn-row {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--transition);
+}
+
+.conn-row:hover {
+  background: var(--bg-surface);
+}
+
+.conn-row:last-child {
+  border-bottom: none;
+}
+
+.conn-table td {
+  padding: 9px 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Column sizing */
+.col-port    { width: 110px; }
+.col-proto   { width: 70px; }
+.col-local   { width: 130px; }
+.col-remote  { width: 180px; }
+.col-state   { width: 130px; }
+.col-pid     { width: 70px; }
+.col-process { width: auto; }
+.col-action  { width: 60px; text-align: right; }
+
+/* Port column */
+.port-number {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.port-service {
+  display: inline-block;
+  margin-left: 7px;
+  font-size: 10px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* Protocol badge */
+.proto-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Addresses */
+.addr-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.addr-empty {
+  color: var(--text-muted);
+}
+
+.mono-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Process name */
+.process-name {
+  font-size: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* State chips */
+.state-chip {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+}
+
+.state-chip.state-listen {
+  color: var(--state-listen);
+  background: var(--state-listen-bg);
+}
+
+.state-chip.state-established {
+  color: var(--state-established);
+  background: var(--state-established-bg);
+}
+
+.state-chip.state-time-wait {
+  color: var(--state-time-wait);
+  background: var(--state-time-wait-bg);
+}
+
+.state-chip.state-other {
+  color: var(--state-other);
+  background: var(--state-other-bg);
+}
+
+/* Kill button */
+.kill-btn {
+  background: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: all var(--transition);
+  letter-spacing: 0.02em;
+}
+
+.kill-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}

@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-base:        #1A1A1A;
+  --bg-surface:     #222222;
+  --bg-raised:      #2A2A2A;
+  --bg-hover:       #303030;
+  --border:         #333333;
+  --border-subtle:  #2A2A2A;
+
+  --text-primary:   #E8E8E8;
+  --text-secondary: #999999;
+  --text-muted:     #555555;
+
+  --accent:         #E8512A;
+  --accent-dim:     rgba(232, 81, 42, 0.15);
+  --accent-hover:   #F05E35;
+
+  --state-listen:      #E8512A;
+  --state-established: #4CAF7D;
+  --state-time-wait:   #555555;
+  --state-other:       #888888;
+
+  --state-listen-bg:      rgba(232, 81, 42, 0.1);
+  --state-established-bg: rgba(76, 175, 125, 0.1);
+  --state-time-wait-bg:   rgba(85, 85, 85, 0.1);
+  --state-other-bg:       rgba(136, 136, 136, 0.1);
+
+  --font-ui:   'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --transition: 120ms ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+button {
+  font-family: var(--font-ui);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input {
+  font-family: var(--font-ui);
+  outline: none;
+}
