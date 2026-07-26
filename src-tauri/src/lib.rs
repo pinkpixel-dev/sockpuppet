@@ -10,6 +10,28 @@ use tauri::{
     Manager,
 };
 
+const DISABLED_GIO_MODULE_DIR: &str = "/__sockpuppet_appimage_disabled_gio_modules__";
+
+fn appimage_gio_overrides(
+    appimage: Option<&std::ffi::OsStr>,
+) -> Option<[(&'static str, &'static str); 2]> {
+    if cfg!(target_os = "linux") && appimage.is_some() {
+        Some([
+            ("GIO_MODULE_DIR", DISABLED_GIO_MODULE_DIR),
+            ("GIO_EXTRA_MODULES", DISABLED_GIO_MODULE_DIR),
+        ])
+    } else {
+        None
+    }
+}
+
+fn configure_appimage_gio() {
+    if let Some(overrides) = appimage_gio_overrides(std::env::var_os("APPIMAGE").as_deref()) {
+        for (key, value) in overrides {
+            std::env::set_var(key, value);
+        }
+    }
+}
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Connection {
@@ -241,6 +263,8 @@ async fn kill_process(pid: u32) -> Result<String, String> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    configure_appimage_gio();
+
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![
@@ -299,4 +323,36 @@ pub fn run() {
         })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{appimage_gio_overrides, DISABLED_GIO_MODULE_DIR};
+    use std::ffi::OsStr;
+
+    #[test]
+    fn gio_overrides_are_disabled_outside_an_appimage() {
+        assert_eq!(appimage_gio_overrides(None), None);
+    }
+
+    #[cfg(target_os = "linux")]
+    #[test]
+    fn linux_appimages_disable_both_gio_module_paths() {
+        assert_eq!(
+            appimage_gio_overrides(Some(OsStr::new("/tmp/Sockpuppet.AppImage"))),
+            Some([
+                ("GIO_MODULE_DIR", DISABLED_GIO_MODULE_DIR),
+                ("GIO_EXTRA_MODULES", DISABLED_GIO_MODULE_DIR),
+            ])
+        );
+    }
+
+    #[cfg(not(target_os = "linux"))]
+    #[test]
+    fn non_linux_appimages_keep_default_gio_module_paths() {
+        assert_eq!(
+            appimage_gio_overrides(Some(OsStr::new("Sockpuppet.AppImage"))),
+            None
+        );
+    }
 }

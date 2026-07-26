@@ -1,0 +1,1 @@
+1c1464511b89092a16a64f337ccb681aac81b1f172c0bbbead3dc6388678cf4f    src-tauri/target/release/bundle/appimage/Sockpuppet_1.0.1_amd64.AppImage
